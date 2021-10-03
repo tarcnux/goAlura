@@ -5,7 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const repeticoesMonitoramento = 3
+const esperarProximoMonitoramento = 5
 
 func main() {
 
@@ -63,7 +67,8 @@ func leComando() int {
 	var comandoLido int
 	fmt.Scan(&comandoLido)
 
-	fmt.Println("O valor da variável comando é: ", comandoLido)
+	fmt.Println("O comando escolhido foi: ", comandoLido)
+	fmt.Println("") //Pula uma linha
 	return comandoLido
 }
 
@@ -77,9 +82,13 @@ func iniciarMonitoramento() {
 
 	fmt.Println(sites)
 
-	for i, site := range sites {
-		fmt.Println("Testando site", i, ":", site)
-		testaSite(site)
+	for i := 0; i <= repeticoesMonitoramento; i++ {
+		fmt.Println("") //Pula uma linha
+		for i, site := range sites {
+			fmt.Println("Testando site", i, ":", site)
+			testaSite(site)
+		}
+		time.Sleep(esperarProximoMonitoramento * time.Second) //Espera N segundos
 	}
 }
 
