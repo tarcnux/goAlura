@@ -69,15 +69,22 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitoramento...")
-	var sites [4]string
-	sites[0] = "http://www.tarcnux.com.br"
-	sites[1] = "https://random-status-code.herokuapp.com/"
-	sites[2] = "https://mestreemqueijos.com.br"
-	sites[3] = "htpps://ideiavegana.com.br"
+	//slice é um tipo de array dinâmico
+	sites := []string{"http://www.tarcnux.com.br",
+		"https://random-status-code.herokuapp.com/",
+		"https://mestreemqueijos.com.br",
+		"https://ideiavegana.com.br"}
 
-	site := "https://random-status-code.herokuapp.com/" //Retorna http status code aleatório
-	resp, _ := http.Get(site)                           //Retorna resp, err, no caso acima igonra o err com o _
-	//fmt.Println(resp)
+	fmt.Println(sites)
+
+	for i, site := range sites {
+		fmt.Println("Testando site", i, ":", site)
+		testaSite(site)
+	}
+}
+
+func testaSite(site string) {
+	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site:", site, "foi carregado com sucesso!")
