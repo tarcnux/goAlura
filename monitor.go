@@ -69,7 +69,12 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitoramento...")
-	//site := "http://www.tarcnux.com.br"
+	var sites [4]string
+	sites[0] = "http://www.tarcnux.com.br"
+	sites[1] = "https://random-status-code.herokuapp.com/"
+	sites[2] = "https://mestreemqueijos.com.br"
+	sites[3] = "htpps://ideiavegana.com.br"
+
 	site := "https://random-status-code.herokuapp.com/" //Retorna http status code aleatório
 	resp, _ := http.Get(site)                           //Retorna resp, err, no caso acima igonra o err com o _
 	//fmt.Println(resp)
