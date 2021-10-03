@@ -67,7 +67,14 @@ func leComando() int {
 
 func iniciarMonitoramento() {
 	fmt.Println("Monitoramento...")
-	site := "http://www.tarcnux.com.br"
-	resp, _ := http.Get(site) //Retorna resp, err, no caso acima igonra o err com o _
-	fmt.Println(resp)
+	//site := "http://www.tarcnux.com.br"
+	site := "https://random-status-code.herokuapp.com/" //Retorna http status code aleatório
+	resp, _ := http.Get(site)                           //Retorna resp, err, no caso acima igonra o err com o _
+	//fmt.Println(resp)
+
+	if resp.StatusCode == 200 {
+		fmt.Println("O site:", site, "foi carregado com sucesso!")
+	} else {
+		fmt.Println("O site:", site, "está com problema! HTTP Status code: ", resp.StatusCode)
+	}
 }
