@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 )
 
@@ -14,7 +15,7 @@ func main() {
 
 	switch comando {
 	case 1:
-		fmt.Println("Monitorando...")
+		iniciarMonitoramento()
 	case 2:
 		fmt.Println("Exibindo Logs...")
 	case 0:
@@ -39,11 +40,15 @@ func main() {
 }
 
 func exibeIntroducao() {
-	nome := "Tarcísio"
-	versao := 1.1
-
+	nome, versao := pegaNomeVersao() //Função com retorno de duas variáveis
 	fmt.Println("Olá, sr(a).", nome)
 	fmt.Println("Este programa está na versão", versao)
+}
+
+func pegaNomeVersao() (string, float64) {
+	nome := "Tarcísio"
+	versao := 1.1
+	return nome, versao
 }
 
 func exibeMenu() {
@@ -58,4 +63,11 @@ func leComando() int {
 
 	fmt.Println("O valor da variável comando é: ", comandoLido)
 	return comandoLido
+}
+
+func iniciarMonitoramento() {
+	fmt.Println("Monitoramento...")
+	site := "http://www.tarcnux.com.br"
+	resp, _ := http.Get(site) //Retorna resp, err, no caso acima igonra o err com o _
+	fmt.Println(resp)
 }
