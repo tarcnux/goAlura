@@ -19,6 +19,7 @@ func main() {
 
 	fmt.Println("O valor da variável comando é: ", comando)
 
+	/**
 	if comando == 1 {
 		fmt.Println("Monitoramento ...")
 	} else if comando == 2 {
@@ -26,6 +27,18 @@ func main() {
 	} else if comando == 0 {
 		fmt.Println("Saindo do progama...")
 	} else {
+		fmt.Println("Não conheço este comando")
+	}
+	*/
+
+	switch comando {
+	case 1:
+		fmt.Println("Monitorando...")
+	case 2:
+		fmt.Println("Exibindo Logs...")
+	case 0:
+		fmt.Println("Saindo do programa...")
+	default:
 		fmt.Println("Não conheço este comando")
 	}
 
