@@ -2,14 +2,17 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
-const repeticoesMonitoramento = 3
-const esperarProximoMonitoramento = 5
+const repeticoesMonitoramento = 2
+const esperarProximoMonitoramento = 2
 
 func main() {
 
@@ -75,10 +78,7 @@ func leComando() int {
 func iniciarMonitoramento() {
 	fmt.Println("Monitoramento...")
 	//slice é um tipo de array dinâmico
-	sites := []string{"http://www.tarcnux.com.br",
-		"https://random-status-code.herokuapp.com/",
-		"https://mestreemqueijos.com.br",
-		"https://ideiavegana.com.br"}
+	sites := lerSitesDoArquivo()
 
 	fmt.Println(sites)
 
@@ -93,11 +93,44 @@ func iniciarMonitoramento() {
 }
 
 func testaSite(site string) {
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site:", site, "foi carregado com sucesso!")
 	} else {
 		fmt.Println("O site:", site, "está com problema! HTTP Status code: ", resp.StatusCode)
 	}
+}
+
+func lerSitesDoArquivo() []string {
+	var sites []string
+
+	arquivo, err := os.Open("sites.txt")
+	//arquivo, err := ioutil.ReadFile("sites.txt")
+
+	if err != nil {
+		fmt.Println("Erro ao tentar abrir o arquivo:", err)
+	}
+
+	leitor := bufio.NewReader(arquivo)
+
+	for {
+		linha, err := leitor.ReadString('\n')
+		linha = strings.TrimSpace(linha)
+
+		//fmt.Println(linha)
+		sites = append(sites, linha)
+
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			fmt.Println("Erro ao tentar ler o arquivo:", err)
+		}
+	}
+	arquivo.Close()
+	return sites
 }
