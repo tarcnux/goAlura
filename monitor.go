@@ -18,4 +18,15 @@ func main() {
 	fmt.Scan(&comando)
 
 	fmt.Println("O valor da variável comando é: ", comando)
+
+	if comando == 1 {
+		fmt.Println("Monitoramento ...")
+	} else if comando == 2 {
+		fmt.Println("Exibindo Logs...")
+	} else if comando == 0 {
+		fmt.Println("Saindo do progama...")
+	} else {
+		fmt.Println("Não conheço este comando")
+	}
+
 }
